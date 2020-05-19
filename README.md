@@ -1,11 +1,26 @@
-# <center>WaveGlow Vocoder</center>
+# <h1 align="center">WaveGlow Vocoder</h1>
 A vocoder that can convert audio to Mel-Spectrogram and reverse with [WaveGlow](https://github.com/NVIDIA/waveglow), all on GPU(if avaliable).  
 Most code are extracted from [Tacotron2](https://github.com/NVIDIA/tacotron2/) and [WaveGlow](https://github.com/NVIDIA/waveglow) of Nvidia.
-## <center>Install</center>
+## <h2 align="center">Install</h1>
 ```
 pip install waveglow-vocoder
 ```
-## <center>Usage</center>
+
+## <h2 align="center">Example</h1>
+
+
+![img](original.png)
+![wav](original.wav)
+
+![img](conveted.png)
+![wav](conveted.wav)
+
+## <h2 align="center">Performance</h1>
+CPU(Intel i5):
+
+GPU(GTX 1080Ti):
+
+## <h2 align="center">Usage</h1>
 Load wav file as usual
 ```
 import librosa
@@ -21,27 +36,14 @@ WV = WaveGlowVocoder()
 mel = WV.wav2mel(y_tensor)
 ```
 Decoder it with Waveglow.  
->NOTE: As the parameter of pre-trained model is alignment with [Tacotron2](https://github.com/NVIDIA/tacotron2/), one might get totally noise if the Mel spectrogram generated from other function. I'm trying to fix it.
+>NOTE:  
+ As the parameter of pre-trained model is alignment with [Tacotron2](https://github.com/NVIDIA/tacotron2/), one might get totally noise if the Mel spectrogram comes other function than *wav2mel*(an alias for TacotronSTFT.mel_spectrogram).  
+ Support for librosa and torchaudio is under development.
 ```
 wav = WV.mel2wav(mel)
 ```
 
-## <center>Example</center>
-
-
-![img](original.png)
-![wav](original.wav)
-
-![img](conveted.png)
-![wav](conveted.wav)
-
-## <center>Performance</center>
-CPU(Intel i5):
-
-GPU(GTX 1080Ti):
-
-
-## <center>Other pretrained model / Train with your own data</center>
+## <h2 align="center">Other pretrained model / Train with your own data</h1>
 This vocoder will download pre-trained model from [pytorch hub](https://pytorch.org/hub/nvidia_deeplearningexamples_waveglow/) on the first time of initialize.  
 You can also download the latest model from [WaveGlow](https://github.com/NVIDIA/waveglow), or  with your own data and pass the path to the waveglow vocoder.
 
@@ -53,7 +55,7 @@ WV = WaveGlowVocoder(waveglow_path=waveglow_path, config_path=config_path)
 Then use it as usual.
 
 
-## <center>TODO</center>
+## <h2 align="center">TODO</h1>
 - pip
 - examples
 - performance
@@ -61,7 +63,7 @@ Then use it as usual.
 - CPU support
 
 
-## <center>Referrance</center>
+## <h2 align="center">Reference</h1>
 - [WaveGlow](https://github.com/NVIDIA/waveglow)
 - [Tacotron2](https://github.com/NVIDIA/tacotron2/)
 - [Wavenet Vocoder](https://github.com/r9y9/wavenet_vocoder)
