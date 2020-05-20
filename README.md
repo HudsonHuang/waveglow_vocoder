@@ -57,6 +57,8 @@ Then use it as usual.
 
 ## <h2 align="center">TODO</h1>
 - pip
+- WaveRNN Vocoder
+- MelGAN Vocoder
 - examples
 - performance
 - support librosa Mel input
