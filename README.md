@@ -17,14 +17,14 @@ pip install waveglow-vocoder
 
 ## <h2 align="center">Usage</h1>
 Load wav file as torch tensor on GPU.
-```
+```python
 import librosa
 
 y,sr = librosa.load(librosa.util.example_audio_file(), sr=22050, mono=True, duration=10, offset=30)
 y_tensor = torch.from_numpy(y).to(device='cuda', dtype=torch.float32)
 ```
 Apply mel transform, this would be done on GPU.
-```
+```python
 from waveglow_vocoder import WaveGlowVocoder
 
 WV = WaveGlowVocoder()
@@ -34,7 +34,7 @@ Decoder it with Waveglow.
 >NOTE:  
  As the hyperparameter of pre-trained model is alignment with [Tacotron2](https://github.com/NVIDIA/tacotron2/), one might get totally noise if the Mel spectrogram comes from other function than *wav2mel*(an alias for TacotronSTFT.mel_spectrogram).  
  Support for the melspectrogram from librosa and torchaudio is under development.
-```
+```python
 wav = WV.mel2wav(mel)
 ```
 
@@ -42,7 +42,7 @@ wav = WV.mel2wav(mel)
 This vocoder will download pre-trained model from [pytorch hub](https://pytorch.org/hub/nvidia_deeplearningexamples_waveglow/) on the first time of initialize.  
 You can also download the latest model from [WaveGlow](https://github.com/NVIDIA/waveglow), or  with your own data and pass the path to the waveglow vocoder.
 
-```
+```python
 config_path = "your_config_of_model_training.json"
 waveglow_path="your_model_path.pt"
 WV = WaveGlowVocoder(waveglow_path=waveglow_path, config_path=config_path)
