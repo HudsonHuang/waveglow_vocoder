@@ -10,6 +10,7 @@ from waveglow_vocoder.audio_layers import STFT, Denoiser, TacotronSTFT
 
 class WaveGlowVocoder(object):
     def __init__(self, config_path="config.json", waveglow_path="waveglow_256channels_universal_v5.pt"):
+        config_path = os.path.join(os.path.dirname(__file__), config_path)
         with open(config_path) as f:
             data = f.read()
         config = json.loads(data)
@@ -46,19 +47,3 @@ class WaveGlowVocoder(object):
             audio = self.denoiser(audio, denoise)
         return audio.squeeze(1)
 
-if __name__ == "__main__":
-    import librosa
-    # Load example wav file
-    y,sr = librosa.load(librosa.util.example_audio_file(), sr=22050, mono=True, duration=10, offset=30)
-    y_tensor = torch.from_numpy(y).to(device='cuda', dtype=torch.float32)
-
-    # You can apply mel transform and decoder it with Waveglow
-    WV = WaveGlowVocoder()
-    mel = WV.wav2mel(y_tensor)
-    wav = WV.mel2wav(mel)
-    # get shape: (batch_size, wav_sample_len)
-    wav = wav[0].cpu().numpy()
-
-    # Save waveform
-    librosa.output.write_wav("waveglow.wav", wav, sr)
-    librosa.output.write_wav("original.wav", y, sr)

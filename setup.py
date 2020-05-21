@@ -1,11 +1,16 @@
 from setuptools import setup, find_packages
 import imp
 
-version = imp.load_source('yata.version', 'waveglow_vocoder/version.py')
+version = imp.load_source('waveglow_vocoder.version', 'waveglow_vocoder/version.py')
 description='A vocoder that can convert audio to Mel-Spectrogram and reverse with WaveGlow, all on GPU(if avaliable).'
 
 with open('README.md') as file:
     long_description = file.read()
+
+install_requires = [
+    "librosa",
+    "torch>=0.4.0",
+]
 
 setup(
     name='waveglow_vocoder',
@@ -34,6 +39,6 @@ setup(
     ],
     keywords='deep learning, audio processing, machine learning',
     license='BSD-3',
-    install_requires=[
-    ]
+    package_data={'waveglow_vocoder': ['*.json']},
+    install_requires=install_requires
 )
