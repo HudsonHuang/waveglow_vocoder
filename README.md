@@ -7,18 +7,12 @@ pip install waveglow-vocoder
 ```
 
 ## <h2 align="center">Example</h1>
-
-
 ![img](original.png)
 ![wav](original.wav)
 
 ![img](conveted.png)
 ![wav](conveted.wav)
 
-## <h2 align="center">Performance</h1>
-CPU(Intel i5):
-
-GPU(GTX 1080Ti):
 
 ## <h2 align="center">Usage</h1>
 Load wav file as usual
@@ -56,10 +50,8 @@ Then use it as usual.
 
 
 ## <h2 align="center">TODO</h1>
-- pip
 - WaveRNN Vocoder
 - MelGAN Vocoder
-- examples
 - performance
 - support librosa Mel input
 - CPU support

@@ -1,5 +1,6 @@
 import json
 import os
+import warnings
 
 import numpy as np
 import torch
@@ -33,10 +34,19 @@ class WaveGlowVocoder(object):
         self.stft = TacotronSTFT(**data_config).cuda()
 
     def wav2mel(self, audio):
-        # Input shape: (batch_size, wav_sample_len)
         # Output shape: (batch_size, num_mel, num_window)
-        audio_norm = audio.unsqueeze(0)
-        melspec = self.stft.mel_spectrogram(audio_norm)
+        if len(audio.shape) == 1:
+            audio = audio.unsqueeze(0)
+        elif:
+            len(audio.shape) >= 2:
+            assert("Input shape: (wav_sample_len,) or (batch_size, wav_sample_len)")
+        
+        if torch.max(torch.abs(audio)) > 1.0:
+            warnings.warn('Maximum amplitude of input waveform over 1.0, clipping.')
+            audio[audio<-1.0] = -1.0
+            audio[audio>1.0] = 1.0
+
+        melspec = self.stft.mel_spectrogram(audio)
         return melspec
 
     def mel2wav(self, mel, denoise=0.001):
