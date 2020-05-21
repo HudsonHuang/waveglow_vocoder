@@ -32,8 +32,8 @@ mel = WV.wav2mel(y_tensor)
 ```
 Decoder it with Waveglow.  
 >NOTE:  
- As the hyperparameter of pre-trained model is alignment with [Tacotron2](https://github.com/NVIDIA/tacotron2/), one might get totally noise if the Mel spectrogram comes other function than *wav2mel*(an alias for TacotronSTFT.mel_spectrogram).  
- Support for librosa and torchaudio is under development.
+ As the hyperparameter of pre-trained model is alignment with [Tacotron2](https://github.com/NVIDIA/tacotron2/), one might get totally noise if the Mel spectrogram comes from other function than *wav2mel*(an alias for TacotronSTFT.mel_spectrogram).  
+ Support for the melspectrogram from librosa and torchaudio is under development.
 ```
 wav = WV.mel2wav(mel)
 ```
