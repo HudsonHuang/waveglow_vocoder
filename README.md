@@ -16,14 +16,14 @@ pip install waveglow-vocoder
 | [original speech](./examples/speech_vctk_original.wav)  | [vocoded speech](./examples/speech_vctk_waveglow.wav) |
 
 ## <h2 align="center">Usage</h1>
-Load wav file as usual
+Load wav file as torch tensor on GPU.
 ```
 import librosa
 
 y,sr = librosa.load(librosa.util.example_audio_file(), sr=22050, mono=True, duration=10, offset=30)
 y_tensor = torch.from_numpy(y).to(device='cuda', dtype=torch.float32)
 ```
-Apply mel transform, this would be done on GPU if avaliable.
+Apply mel transform, this would be done on GPU.
 ```
 from waveglow_vocoder import WaveGlowVocoder
 
@@ -53,8 +53,8 @@ Then use it as usual.
 ## <h2 align="center">TODO</h1>
 - WaveRNN Vocoder
 - MelGAN Vocoder
-- performance
-- support librosa Mel input
+- Performance
+- Support librosa Mel input
 - CPU support
 
 
