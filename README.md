@@ -1,6 +1,6 @@
 # <h1 align="center">WaveGlow Vocoder</h1>
 A vocoder that can convert audio to Mel-Spectrogram and reverse with [WaveGlow](https://github.com/NVIDIA/waveglow), all on GPU(if avaliable).  
-Most code are extracted from [Tacotron2](https://github.com/NVIDIA/tacotron2/) and [WaveGlow](https://github.com/NVIDIA/waveglow) of Nvidia.
+Most code is from [Tacotron2](https://github.com/NVIDIA/tacotron2/) and [WaveGlow](https://github.com/NVIDIA/waveglow).
 ## <h2 align="center">Install</h1>
 ```
 pip install waveglow-vocoder
