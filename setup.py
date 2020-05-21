@@ -17,7 +17,7 @@ setup(
     version=version.version,
     description=description,
     author='HudsonHuang',
-    author_email='h.zy@mail.scut.edu.cn',
+    author_email='790209714@qq.com',
     url='http://github.com/HudsonHuang/waveglow_vocoder',
     packages=find_packages(),
     long_description=long_description,
