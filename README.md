@@ -7,12 +7,13 @@ pip install waveglow-vocoder
 ```
 
 ## <h2 align="center">Example</h1>
-![img](original.png)
-![wav](original.wav)
-
-![img](conveted.png)
-![wav](conveted.wav)
-
+ 
+|  Original   | Vocoded  |
+|  ----  | ----  |
+| ![img](./examples/music_original.jpg)  | ![img](./examples/music_waveglow.jpg) |
+| [original music](./examples/music_original.wav)  | [vocoded music](./examples/music_waveglow.wav) |
+| ![img](./examples/speech_vctk_original.jpg)  | ![img](./examples/speech_vctk_waveglow.jpg) |
+| [original speech](./examples/speech_vctk_original.wav)  | [vocoded speech](./examples/speech_vctk_waveglow.wav) |
 
 ## <h2 align="center">Usage</h1>
 Load wav file as usual
