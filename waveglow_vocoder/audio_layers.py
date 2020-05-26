@@ -76,6 +76,7 @@ class STFT(torch.nn.Module):
         return magnitude, phase
 
     def inverse(self, magnitude, phase):
+        device = magnitude.device
         recombine_magnitude_phase = torch.cat(
             [magnitude*torch.cos(phase), magnitude*torch.sin(phase)], dim=1)
 
@@ -94,8 +95,8 @@ class STFT(torch.nn.Module):
             approx_nonzero_indices = torch.from_numpy(
                 np.where(window_sum > tiny(window_sum))[0])
             window_sum = torch.autograd.Variable(
-                torch.from_numpy(window_sum), requires_grad=False)
-            inverse_transform[:, :, approx_nonzero_indices] /= window_sum[approx_nonzero_indices].cuda()
+                torch.from_numpy(window_sum), requires_grad=False).to(device)
+            inverse_transform[:, :, approx_nonzero_indices] /= window_sum[approx_nonzero_indices]
 
             # scale by hop ratio
             inverse_transform *= float(self.filter_length) / self.hop_length
@@ -275,9 +276,10 @@ class Denoiser(torch.nn.Module):
     def __init__(self, waveglow, filter_length=1024, n_overlap=4,
                  win_length=1024, mode='zeros'):
         super(Denoiser, self).__init__()
+        self.device = waveglow.upsample.weight.device
         self.stft = STFT(filter_length=filter_length,
                          hop_length=int(filter_length/n_overlap),
-                         win_length=win_length).cuda()
+                         win_length=win_length).to(self.device)
         if mode == 'zeros':
             mel_input = torch.zeros(
                 (1, 80, 862),
@@ -298,8 +300,8 @@ class Denoiser(torch.nn.Module):
         self.register_buffer('bias_spec', bias_spec[:, :, 0][:, :, None])
 
     def forward(self, audio, strength=0.1):
-        audio_spec, audio_angles = self.stft.transform(audio.cuda().float())
+        audio_spec, audio_angles = self.stft.transform(audio.to(self.device).float())
         audio_spec_denoised = audio_spec - self.bias_spec * strength
         audio_spec_denoised = torch.clamp(audio_spec_denoised, 0.0)
-        audio_denoised = self.stft.inverse(audio_spec_denoised.cuda(), audio_angles.cuda())
+        audio_denoised = self.stft.inverse(audio_spec_denoised.to(self.device), audio_angles.to(self.device))
         return audio_denoised

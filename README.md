@@ -23,7 +23,7 @@ import librosa
 y,sr = librosa.load(librosa.util.example_audio_file(), sr=22050, mono=True, duration=10, offset=30)
 y_tensor = torch.from_numpy(y).to(device='cuda', dtype=torch.float32)
 ```
-Apply mel transform, this would be done on GPU.
+Apply mel transform, this would be done on GPU(if ava).
 ```python
 from waveglow_vocoder import WaveGlowVocoder
 
@@ -55,7 +55,6 @@ Then use it as usual.
 - MelGAN Vocoder
 - Performance
 - Support librosa Mel input
-- CPU support
 
 
 ## <h2 align="center">Reference</h1>

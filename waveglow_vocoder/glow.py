@@ -256,15 +256,19 @@ class WaveGlow(torch.nn.Module):
 
         spect = spect.unfold(2, self.n_group, self.n_group).permute(0, 2, 1, 3)
         spect = spect.contiguous().view(spect.size(0), spect.size(1), -1).permute(0, 2, 1)
+        device = spect.device
 
-        if spect.type() == 'torch.cuda.HalfTensor':
-            audio = torch.cuda.HalfTensor(spect.size(0),
-                                          self.n_remaining_channels,
-                                          spect.size(2)).normal_()
-        else:
-            audio = torch.cuda.FloatTensor(spect.size(0),
-                                           self.n_remaining_channels,
-                                           spect.size(2)).normal_()
+        audio = torch.Tensor(spect.size(0),
+                            self.n_remaining_channels,
+                            spect.size(2)).normal_().to(device)
+        # if spect.type() == 'torch.cuda.HalfTensor':
+        #     audio = torch.HalfTensor(spect.size(0),
+        #                                   self.n_remaining_channels,
+        #                                   spect.size(2)).normal_().to(device)
+        # else:
+        #     audio = torch.cuda.FloatTensor(spect.size(0),
+        #                                    self.n_remaining_channels,
+        #                                    spect.size(2)).normal_().to(device)
 
         audio = torch.autograd.Variable(sigma*audio)
 
@@ -283,10 +287,11 @@ class WaveGlow(torch.nn.Module):
             audio = self.convinv[k](audio, reverse=True)
 
             if k % self.n_early_every == 0 and k > 0:
-                if spect.type() == 'torch.cuda.HalfTensor':
-                    z = torch.cuda.HalfTensor(spect.size(0), self.n_early_size, spect.size(2)).normal_()
-                else:
-                    z = torch.cuda.FloatTensor(spect.size(0), self.n_early_size, spect.size(2)).normal_()
+                z = torch.Tensor(spect.size(0), self.n_early_size, spect.size(2)).normal_().to(device)
+                # if spect.type() == 'torch.cuda.HalfTensor':
+                #     z = torch.HalfTensor(spect.size(0), self.n_early_size, spect.size(2)).normal_().to(device)
+                # else:
+                #     z = torch.FloatTensor(spect.size(0), self.n_early_size, spect.size(2)).normal_().to(device)
                 audio = torch.cat((sigma*z, audio),1)
 
         audio = audio.permute(0,2,1).contiguous().view(audio.size(0), -1).data
