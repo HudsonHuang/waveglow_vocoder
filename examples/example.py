@@ -14,5 +14,5 @@ wav = WV.mel2wav(mel)
 wav = wav[0].cpu().numpy()
 
 # Save waveform
-librosa.output.write_wav("waveglow.wav", wav, sr)
-librosa.output.write_wav("original.wav", y, sr)
+librosa.output.write_wav("music_waveglow.wav", wav, sr)
+librosa.output.write_wav("music_original.wav", y, sr)

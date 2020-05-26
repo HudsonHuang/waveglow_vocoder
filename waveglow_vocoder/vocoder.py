@@ -1,17 +1,23 @@
 import json
 import os
 import warnings
+import sys
+sys.path.insert(0, os.path.dirname(__file__))
 
 import numpy as np
 import torch
 
-import waveglow_vocoder.glow
+import waveglow_vocoder.glow as glow
 from waveglow_vocoder.audio_layers import STFT, Denoiser, TacotronSTFT
 
-
 class WaveGlowVocoder(object):
-    def __init__(self, config_path="config.json", waveglow_path="waveglow_256channels_universal_v5.pt"):
-        config_path = os.path.join(os.path.dirname(__file__), config_path)
+    def __init__(self, config_path=None, waveglow_path="waveglow_256channels_universal_v5.pt", device=None):
+        if device == None:
+            device = "cuda" if torch.cuda.is_available() else "cpu"
+        self.device = device
+
+        if config_path == None:
+            config_path = os.path.join(os.path.dirname(__file__), "config.json")
         with open(config_path) as f:
             data = f.read()
         config = json.loads(data)
@@ -37,8 +43,7 @@ class WaveGlowVocoder(object):
         # Output shape: (batch_size, num_mel, num_window)
         if len(audio.shape) == 1:
             audio = audio.unsqueeze(0)
-        elif:
-            len(audio.shape) >= 2:
+        elif len(audio.shape) >= 2:
             assert("Input shape: (wav_sample_len,) or (batch_size, wav_sample_len)")
         
         if torch.max(torch.abs(audio)) > 1.0:

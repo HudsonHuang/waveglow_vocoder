@@ -105,3 +105,9 @@ ENV/
 
 # VSCode
 .vscode/
+
+# Model weight
+*.pt
+*.pth
+*.ckpt
+*.checkpoint
