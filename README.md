@@ -1,5 +1,5 @@
 # <h1 align="center">WaveGlow Vocoder</h1>
-A vocoder that can convert audio to Mel-Spectrogram and reverse with [WaveGlow](https://github.com/NVIDIA/waveglow), all on GPU.  
+A vocoder that can convert audio to Mel-Spectrogram and reverse with [WaveGlow](https://github.com/NVIDIA/waveglow), all with GPU.  
 Most code is from [Tacotron2](https://github.com/NVIDIA/tacotron2/) and [WaveGlow](https://github.com/NVIDIA/waveglow).
 ## <h2 align="center">Install</h1>
 ```
@@ -23,7 +23,7 @@ import librosa
 y,sr = librosa.load(librosa.util.example_audio_file(), sr=22050, mono=True, duration=10, offset=30)
 y_tensor = torch.from_numpy(y).to(device='cuda', dtype=torch.float32)
 ```
-Apply mel transform, this would be done on GPU(if ava).
+Apply mel transform, this would be done with GPU(if avaliable).
 ```python
 from waveglow_vocoder import WaveGlowVocoder
 
