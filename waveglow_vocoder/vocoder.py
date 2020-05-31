@@ -44,7 +44,7 @@ class WaveGlowVocoder(object):
 
     def maybe_clip(self, audio):
         if torch.max(torch.abs(audio)) > 1.0:
-            warnings.warn('Maximum amplitude of input waveform over 1.0, clipping.')
+            logging.warning('Maximum amplitude of input waveform over 1.0, clipping.')
             audio[audio<-1.0] = -1.0
             audio[audio>1.0] = 1.0
         return audio
@@ -67,6 +67,6 @@ class WaveGlowVocoder(object):
             audio = self.waveglow.infer(mel)
             audio = self.denoiser(audio, denoise)
         if torch.max(torch.abs(audio)) > 1.0:
-            warnings.warn('Maximum amplitude of output waveform over 1.0.')
+            logging.warning('Maximum amplitude of output waveform over 1.0.')
         return audio.squeeze(1)
 
