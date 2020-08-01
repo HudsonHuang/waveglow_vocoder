@@ -18,6 +18,7 @@ pip install waveglow-vocoder
 ## <h2 align="center">Usage</h1>
 Load wav file as torch tensor on GPU.
 ```python
+import torch
 import librosa
 
 y,sr = librosa.load(librosa.util.example_audio_file(), sr=22050, mono=True, duration=10, offset=30)
