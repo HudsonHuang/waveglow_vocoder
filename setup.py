@@ -1,8 +1,11 @@
 from setuptools import setup, find_packages
-import imp
+import importlib.util
 
-version = imp.load_source('waveglow_vocoder.version', 'waveglow_vocoder/version.py')
-description='A vocoder that can convert audio to Mel-Spectrogram and reverse with WaveGlow, all on GPU(if avaliable).'
+spec = importlib.util.spec_from_file_location('waveglow_vocoder.version', 'waveglow_vocoder/version.py')
+version_module = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(version_module)
+
+description = 'A vocoder that can convert audio to Mel-Spectrogram and reverse with WaveGlow, all on GPU(if available).'
 
 with open('README.md') as file:
     long_description = file.read()
@@ -14,7 +17,7 @@ install_requires = [
 
 setup(
     name='waveglow_vocoder',
-    version=version.version,
+    version=version_module.version,
     description=description,
     author='HudsonHuang',
     author_email='790209714@qq.com',
